@@ -268,5 +268,49 @@ public class TimeSpanTest {
         //common intersection, then the smallest time span ts will be returned, 
         //whereby this time span and [timeSpan] are part of ts, 
         //otherwise null will be returned 
+        //Test with no union
+        assertNull("There is no union!", ts.unionWith(new TimeSpan(new Time(2015, 4, 18, 13, 11), new Time(2015, 4, 20, 9, 20))));
+        //Test with same timespan
+        assertEquals("The same timespan should be returned!", ts.unionWith(new TimeSpan(new Time(2015, 3, 17, 9, 10), new Time(2015, 3, 17, 9, 15))), ts);
+        //Test with end different
+        assertEquals("The given timespan is not correct!",
+                ts.unionWith(new TimeSpan(new Time(2015, 3, 17, 9, 10), new Time(2015, 3, 17, 9, 13))),
+                new TimeSpan(new Time(2015, 3, 17, 9, 10), new Time(2015, 3, 17, 9, 13)));
+        //Test with begin different
+        assertEquals("The given timespan is not correct!",
+                ts.unionWith(new TimeSpan(new Time(2015, 3, 17, 9, 12), new Time(2015, 3, 17, 9, 15))),
+                new TimeSpan(new Time(2015, 3, 17, 9, 12), new Time(2015, 3, 17, 9, 15)));
+        //Test with both different
+        assertEquals("The given timespan is not correct!",
+                ts.unionWith(new TimeSpan(new Time(2015, 3, 17, 9, 12), new Time(2015, 3, 17, 9, 18))),
+                new TimeSpan(new Time(2015, 3, 17, 9, 12), new Time(2015, 3, 17, 9, 15)));
+    }
+
+    @Test
+    public void intersectionWithTest() {
+        //Set values
+        Time t1 = new Time(2015, 3, 17, 9, 10);
+        Time t2 = new Time(2015, 3, 17, 9, 15);
+        TimeSpan ts = new TimeSpan(t1, t2);
+        
+        //@return the largest time span which is part of this time span 
+        //and [timeSpan] will be returned; if the intersection is empty null will 
+        //be returned
+        //Test with no intersection
+        assertNull("There is no intersection!", ts.intersectionWith(new TimeSpan(new Time(2015, 4, 18, 13, 11), new Time(2015, 4, 20, 9, 20))));
+        //Test with same timespan
+        assertEquals("The same timespan should be returned!", ts.intersectionWith(new TimeSpan(new Time(2015, 3, 17, 9, 10), new Time(2015, 3, 17, 9, 15))), ts);
+        //Test with end different
+        assertEquals("The given timespan is not correct!",
+                ts.intersectionWith(new TimeSpan(new Time(2015, 3, 17, 9, 10), new Time(2015, 3, 17, 9, 13))),
+                new TimeSpan(new Time(2015, 3, 17, 9, 10), new Time(2015, 3, 17, 9, 15)));
+        //Test with begin different
+        assertEquals("The given timespan is not correct!",
+                ts.intersectionWith(new TimeSpan(new Time(2015, 3, 17, 9, 12), new Time(2015, 3, 17, 9, 15))),
+                new TimeSpan(new Time(2015, 3, 17, 9, 10), new Time(2015, 3, 17, 9, 15)));
+        //Test with both different
+        assertEquals("The given timespan is not correct!",
+                ts.intersectionWith(new TimeSpan(new Time(2015, 3, 17, 9, 12), new Time(2015, 3, 17, 9, 18))),
+                new TimeSpan(new Time(2015, 3, 17, 9, 10), new Time(2015, 3, 17, 9, 18)));
     }
 }
