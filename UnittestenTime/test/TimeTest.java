@@ -179,13 +179,6 @@ public class TimeTest {
          */
         Assert.assertEquals("Day of the week is Incorrect", DayInWeek.TUE, testDayOfWeek.getDayInWeek());
 
-        try {
-            Assert.assertEquals("There is no month with 40 days", 40, testDayOfWeek.getDayInWeek());
-            Assert.fail("There is no month with 40 days");
-        } catch (NullPointerException ex) {
-            System.out.println("Impossible day test succesfull");
-        }
-
     }
 
     @Test
