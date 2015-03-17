@@ -13,7 +13,7 @@ import sun.security.util.Debug;
 
 /**
  *
- * @author Mnesymne
+ * @author Nick van der Mullen
  */
 public class TimeTest {
 
