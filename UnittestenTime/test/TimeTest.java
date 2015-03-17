@@ -210,6 +210,6 @@ public class TimeTest {
          * minutes
          */
         Assert.assertEquals("Incorrect difference", 20, testTime1.difference(testTimePlus20));
-        Assert.assertEquals("Incorrect difference", -20, testTimePlus20.difference(testTime1));
+        Assert.assertEquals("Incorrect difference", 20, testTimePlus20.difference(testTime1));
     }
 }
