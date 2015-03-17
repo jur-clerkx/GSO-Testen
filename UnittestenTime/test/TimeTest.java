@@ -5,6 +5,7 @@
  */
 
 import fontys.time.DayInWeek;
+import fontys.time.ITime;
 import fontys.time.Time;
 import junit.framework.Assert;
 import org.junit.Before;
@@ -23,7 +24,7 @@ public class TimeTest {
     Time testFalseTime;
     Time testDayOfWeek;
     Time testTimePlus0;
-    Time testTimePlus1Year;
+    Time testTimePlus1Day;
 
     @Before
     public void Before() {
@@ -31,7 +32,7 @@ public class TimeTest {
         testTimeDifference = new Time(2012, 11, 11, 11, 11);
         testTimePlus20 = new Time(2011, 11, 11, 11, 31);
         testTimePlus0 = testTime1;
-        testTimePlus1Year = testTimeDifference;
+        testTimePlus1Day = new Time(2011, 11, 12, 11, 11);
         testDayOfWeek = new Time(2015, 3, 17, 10, 10);
 
     }
@@ -188,17 +189,17 @@ public class TimeTest {
          * @param minutes (a negative value is allowed)
          * @return this time plus minutes
          */
-        testTime1.plus(20);
-        Assert.assertEquals("Time isn't added correctly", 0, testTimePlus20.compareTo(testTime1));
+        ITime testtime = testTime1.plus(20);
+        Assert.assertEquals("Time isn't added correctly", 0, testTimePlus20.compareTo(testtime));
 
-        testTime1.plus(-20);
-        Assert.assertEquals("Time isn't added correctly", 0, testTimePlus0.compareTo(testTime1));
+        testtime = testtime.plus(-20);
+        Assert.assertEquals("Time isn't added correctly", 0, testTimePlus0.compareTo(testtime));
 
-        testTime1.plus(0);
-        Assert.assertEquals("Time isn't added correctly", 0, testTime1.compareTo(testTimePlus0));
+        testtime = testTime1.plus(0);
+        Assert.assertEquals("Time isn't added correctly", 0, testtime.compareTo(testTimePlus0));
 
-        testTime1.plus(525600);
-        Assert.assertEquals("Time isn't added correctly", 0, testTime1.compareTo(testTimePlus1Year));
+        testtime = testTime1.plus(1440);
+        Assert.assertEquals("Time isn't added correctly", 0, testtime.compareTo(testTimePlus1Day));
     }
 
     @Test
