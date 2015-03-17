@@ -42,9 +42,9 @@ public class TimeTest {
         //Constructor
         try {
             Time ErrorTime = new Time(2000, 10, 10, 10, 10);
-            Assert.fail("Invalid Value");
+           
         } catch (IllegalArgumentException ex) {
-            System.out.println("Constructor test Passed");
+            Assert.fail();
         }
 
         try {
