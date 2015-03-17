@@ -196,16 +196,16 @@ public class TimeTest {
          * @return this time plus minutes
          */
         testTime1.plus(20);
-        Assert.assertEquals("Time isn't added correctly", testTimePlus20, testTime1);
+        Assert.assertEquals("Time isn't added correctly", 0, testTimePlus20.compareTo(testTime1));
 
         testTime1.plus(-20);
-        Assert.assertEquals("Time isn't added correctly", testTimePlus0, testTime1);
+        Assert.assertEquals("Time isn't added correctly", 0, testTimePlus0.compareTo(testTime1));
 
         testTime1.plus(0);
-        Assert.assertEquals("Time isn't added correctly", testTime1, testTimePlus0);
+        Assert.assertEquals("Time isn't added correctly", 0, testTime1.compareTo(testTimePlus0));
 
         testTime1.plus(525600);
-        Assert.assertEquals("Time isn't added correctly", testTime1, testTimePlus1Year);
+        Assert.assertEquals("Time isn't added correctly", 0, testTime1.compareTo(testTimePlus1Year));
     }
 
     @Test
