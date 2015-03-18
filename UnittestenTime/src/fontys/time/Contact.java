@@ -57,6 +57,7 @@ public class Contact {
      * exist in the current Agenda.
      *
      * @param a as Appointment
+     * @return true if Appointment is added, returns false if not. 
      */
     public boolean addAppointment(Appointment a) {
         boolean check = false;
