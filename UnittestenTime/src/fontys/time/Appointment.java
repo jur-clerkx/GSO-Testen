@@ -7,13 +7,12 @@
 package fontys.time;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 /**
  *
- * @author Mnesymne
+ * Specificatie en code geschreven door Nick
  */
 public class Appointment implements ITimeSpan{
 

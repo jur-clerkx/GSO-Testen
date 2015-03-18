@@ -10,11 +10,11 @@ import java.util.Iterator;
 
 /**
  *
- * @author Mnesymne
+ * Specificatie en code geschreven door Nick
  */
 public class Contact {
 
-    private String name;
+    private final String name;
     private ArrayList<Appointment> myAgenda;
 
     /**

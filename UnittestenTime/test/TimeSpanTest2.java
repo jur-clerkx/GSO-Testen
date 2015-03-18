@@ -14,7 +14,7 @@ import fontys.time.*;
 
 /**
  *
- * @author Jur
+ * Verbetering geschreven door Nick
  */
 public class TimeSpanTest2 {
 
