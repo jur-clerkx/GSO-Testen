@@ -7,6 +7,8 @@
 package fontys.time;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 /**
@@ -25,8 +27,13 @@ public class Appointment implements ITimeSpan{
      * @param timeSpan as ITimeSpan, can't be before time of creation.
      */
     public Appointment(String subject, ITimeSpan timeSpan) {
+        GregorianCalendar n = new GregorianCalendar();
+        GregorianCalendar c = new GregorianCalendar(timeSpan.getBeginTime().getYear(),timeSpan.getBeginTime().getMonth(),timeSpan.getBeginTime().getDay(),timeSpan.getBeginTime().getHours(),timeSpan.getBeginTime().getMinutes());
+        if(subject != null && !subject.isEmpty() && c.after(n))
+        {
         this.subject = subject;
         this.timeSpan = timeSpan;
+        }
         this.invitees = new ArrayList<>();
     }
 
@@ -62,7 +69,13 @@ public class Appointment implements ITimeSpan{
      */
     public boolean addContact(Contact c)
     {
-        return true;
+        boolean check = false;
+        if(c != null && !this.invitees.contains(c))
+        {
+            this.invitees.add(c);
+            check = true;
+        }
+        return check;
     }
     
     /**
@@ -71,57 +84,60 @@ public class Appointment implements ITimeSpan{
      */
     public void removeContact(Contact c)
     {
-        
+        if(c!= null && this.invitees.contains(c))
+        {
+            invitees.remove(c);
+        }
     }
     
     @Override
     public ITime getBeginTime() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.timeSpan.getBeginTime();
     }
 
     @Override
     public ITime getEndTime() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.timeSpan.getEndTime();
     }
 
     @Override
     public int length() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.timeSpan.length();
     }
 
     @Override
     public void setBeginTime(ITime beginTime) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.timeSpan.setBeginTime(beginTime);
     }
 
     @Override
     public void setEndTime(ITime endTime) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.timeSpan.setEndTime(endTime);
     }
 
     @Override
     public void move(int minutes) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.timeSpan.move(minutes);
     }
 
     @Override
     public void changeLengthWith(int minutes) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.timeSpan.changeLengthWith(minutes);
     }
 
     @Override
     public boolean isPartOf(ITimeSpan timeSpan) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.timeSpan.isPartOf(timeSpan);
     }
 
     @Override
     public ITimeSpan unionWith(ITimeSpan timeSpan) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return this.timeSpan.unionWith(timeSpan);
     }
 
     @Override
     public ITimeSpan intersectionWith(ITimeSpan timeSpan) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.timeSpan.intersectionWith(timeSpan);
     }
     
 }
