@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 /**
  *
- * Specificatie en code geschreven door Nick
+ * Specificatie en code geschreven door Nick, verbeterd door Jur
  */
 public class Contact {
 
@@ -20,11 +20,18 @@ public class Contact {
     /**
      * Constructor of this class
      *
-     * @param name as String, First letter of the name is a capital the rest is
+     * @param name as String
+     * (added by jur) Must not be empty or null!
+     * (removed by jur) First letter of the name is a capital the rest is
      * lowercase
      */
     public Contact(String name) {
-        String n = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+        //(Added by jur) Check for bad values
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException("Name must not be empty or null!");
+        }
+        String n = name.trim();
+        n = n.substring(0,1).toUpperCase() + n.substring(1).toLowerCase();
         this.name = n;
         myAgenda = new ArrayList();
     }
@@ -33,14 +40,15 @@ public class Contact {
      * Getter of the variable name
      *
      * @return name as string
+     * (added by jur) First letter of the name is a capital the rest is
+     * lowercase
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Removes an appointment out of the list. Appointment can't be null and has
-     * to exist inside the current Agenda.
+     * Removes an appointment out of the list.
      *
      * @param a as Appointment
      */

@@ -12,7 +12,7 @@ import java.util.Iterator;
 
 /**
  *
- * Specificatie en code geschreven door Nick
+ * Specificatie en code geschreven door Nick, verbeterd door Jur
  */
 public class Appointment implements ITimeSpan{
 
@@ -30,8 +30,10 @@ public class Appointment implements ITimeSpan{
         GregorianCalendar c = new GregorianCalendar(timeSpan.getBeginTime().getYear(),timeSpan.getBeginTime().getMonth(),timeSpan.getBeginTime().getDay(),timeSpan.getBeginTime().getHours(),timeSpan.getBeginTime().getMinutes());
         if(subject != null && !subject.isEmpty() && c.after(n))
         {
-        this.subject = subject;
+        this.subject = subject.trim();
         this.timeSpan = timeSpan;
+        } else {
+            throw new IllegalArgumentException("Subject can't be null and begintime can't be in the past!");
         }
         this.invitees = new ArrayList<>();
     }
@@ -78,8 +80,8 @@ public class Appointment implements ITimeSpan{
     }
     
     /**
-     * Adds a Contact to this Appointment
-     * @param c as Contact, can't be null.
+     * Removes a Contact from this Appointment
+     * @param c as Contact.
      */
     public void removeContact(Contact c)
     {
