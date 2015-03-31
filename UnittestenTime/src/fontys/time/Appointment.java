@@ -64,9 +64,9 @@ public class Appointment implements ITimeSpan{
     }
 
     /**
-     * Adds a Contact to this Appointment
+     * Adds a Contact to this Appointment and an appointment to the Contact.
      * @param c as Contact, can't be null and can't exist already.And cant overlap with appointments of contact
-     * @return boolean  true if c is added, false if already exists in the list or is null.
+     * @return boolean  true if c is added, false if already exists in the list,is null or overlaps with an appointment with c.
      */
     public boolean addContact(Contact c)
     {
@@ -78,6 +78,7 @@ public class Appointment implements ITimeSpan{
                 if(c.appointments().next().unionWith(timeSpan) != null)
                 {
                   this.invitees.add(c);
+                  c.addAppointment(this);
                 check = true;  
                 }
             }            
