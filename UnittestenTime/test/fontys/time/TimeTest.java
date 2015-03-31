@@ -29,7 +29,7 @@ public class TimeTest {
     Time testTimePlus1Day;
 
     @Before
-    public void Before() {
+    public void Setup() {
         testTime1 = new Time(2011, 11, 11, 11, 11);
         testTimeDifference = new Time(2012, 11, 11, 11, 11);
         testTimePlus20 = new Time(2011, 11, 11, 11, 31);
@@ -44,70 +44,71 @@ public class TimeTest {
 
         //Constructor
         try {
-            Time ErrorTime = new Time(2000, 10, 10, 10, 10);
+            Time ConstructorTestTime = new Time(2000, 10, 10, 10, 10);
            
         } catch (IllegalArgumentException ex) {
             Assert.fail();
         }
 
+        //Test with an invalid month.
         try {
-            Time ErrorTime = new Time(2000, 100, 10, 10, 10);
+            Time ConstructorTestTime = new Time(2000, 100, 10, 10, 10);
             Assert.fail("Invalid Value");
         } catch (IllegalArgumentException ex) {
             System.out.println("Constructor test Passed");
         }
 
+        //Test with an invalid day.
         try {
-            Time ErrorTime = new Time(2000, 10, 100, 10, 10);
+            Time ConstructorTestTime = new Time(2000, 10, 100, 10, 10);
             Assert.fail("Invalid Value");
         } catch (IllegalArgumentException ex) {
             System.out.println("Constructor test Passed");
         }
 
+        //Test with an invalid hour.
         try {
-            Time ErrorTime = new Time(2000, 10, 10, 100, 10);
+            Time ConstructorTestTime = new Time(2000, 10, 10, 100, 10);
             Assert.fail("Invalid Value");
         } catch (IllegalArgumentException ex) {
             System.out.println("Constructor test Passed");
         }
 
+        //Test with an invalid number of minutes.
         try {
-            Time ErrorTime = new Time(2000, 10, 10, 10, 100);
+            Time ConstructorTestTime = new Time(2000, 10, 10, 10, 100);
             Assert.fail("Invalid Value");
         } catch (IllegalArgumentException ex) {
             System.out.println("Constructor test Passed");
         }
 
+        //Test with an invalid negative month.
         try {
-            Time ErrorTime = new Time(2000, 10, 10, 10, 100);
+            Time ConstructorTestTime = new Time(2000, -10, 10, 10, 10);
             Assert.fail("Invalid Value");
         } catch (IllegalArgumentException ex) {
             System.out.println("Constructor test Passed");
         }
 
+        //Test with an invalid negative day.
         try {
-            Time ErrorTime = new Time(2000, -10, 10, 10, 10);
+            Time ConstructorTestTime = new Time(2000, 10, -10, 10, 10);
             Assert.fail("Invalid Value");
         } catch (IllegalArgumentException ex) {
             System.out.println("Constructor test Passed");
         }
 
+        //Test with an invalid negative hour.
         try {
-            Time ErrorTime = new Time(2000, 10, -10, 10, 10);
+            Time ConstructorTestTime = new Time(2000, 10, 10, -10, 10);
             Assert.fail("Invalid Value");
         } catch (IllegalArgumentException ex) {
             System.out.println("Constructor test Passed");
         }
 
+        //Test with an invalid number of minutes. 
         try {
-            Time ErrorTime = new Time(2000, 10, 10, -10, 10);
-            Assert.fail("Invalid Value");
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Constructor test Passed");
-        }
-
-        try {
-            Time ErrorTime = new Time(2000, 10, 10, 10, -10);
+            Time ConstructorTestTime = new Time(2000, 10, 10, 10, -10);
             Assert.fail("Invalid Value");
         } catch (IllegalArgumentException ex) {
             System.out.println("Constructor test Passed");
@@ -191,15 +192,20 @@ public class TimeTest {
          * @param minutes (a negative value is allowed)
          * @return this time plus minutes
          */
+        
+        //Test with a normale value
         ITime testtime = testTime1.plus(20);
         Assert.assertEquals("Time isn't added correctly", 0, testTimePlus20.compareTo(testtime));
 
+        //Test with a negative value.
         testtime = testtime.plus(-20);
         Assert.assertEquals("Time isn't added correctly", 0, testTimePlus0.compareTo(testtime));
 
+        //Test with a 0 value.
         testtime = testTime1.plus(0);
         Assert.assertEquals("Time isn't added correctly", 0, testtime.compareTo(testTimePlus0));
 
+        //Test with a extreme value.
         testtime = testTime1.plus(1440);
         Assert.assertEquals("Time isn't added correctly", 0, testtime.compareTo(testTimePlus1Day));
     }
@@ -214,5 +220,15 @@ public class TimeTest {
          */
         Assert.assertEquals("Incorrect difference", 20, testTime1.difference(testTimePlus20));
         Assert.assertEquals("Incorrect difference", 20, testTimePlus20.difference(testTime1));
+    }
+    
+    @Test
+    public void TestCompare()
+    {
+        
+        //Test to check the compare methode. Tested with a time after testTime, a time before testTime, and a time thats the same as testTime.
+        Assert.assertEquals(1, testTime1.compareTo(this.testTimeDifference));
+        Assert.assertEquals(-1, testTimeDifference.compareTo(testTime1));
+        Assert.assertEquals(0, testTime1.compareTo(testTime1));
     }
 }

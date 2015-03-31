@@ -1,5 +1,9 @@
+<<<<<<< HEAD:UnittestenTime/test/fontys/time/ContactTest.java
 package fontys.time;
 
+=======
+import fontys.time.Contact;
+>>>>>>> origin/master:UnittestenTime/test/ContactTest.java
 
 import fontys.time.Appointment;
 import fontys.time.Contact;
@@ -12,6 +16,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Test;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.

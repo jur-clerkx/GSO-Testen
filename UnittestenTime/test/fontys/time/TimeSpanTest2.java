@@ -16,7 +16,7 @@ import fontys.time.*;
 
 /**
  *
- * Verbetering geschreven door Nick
+ * @author Jur
  */
 public class TimeSpanTest2 {
 
@@ -31,7 +31,7 @@ public class TimeSpanTest2 {
     }
 
     @Test
-    public void TimeSpan2Test() {
+    public void TimeSpanTest() {
         /**
          * @param bt must be earlier than et
          * @param et
@@ -40,21 +40,21 @@ public class TimeSpanTest2 {
         Time t2 = new Time(2015, 3, 16, 12, 15);
         //Test wrong value, where et is earlier than bt.
         try {
-            TimeSpan2 timeSpan2 = new TimeSpan2(t1, -20);
+            new TimeSpan(t1, t2);
             fail("End time of timespan may not be earlier than begin time!");
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
         //Test wrong value, where et and bt are the same.
         try {
-            TimeSpan2 timeSpan2 = new TimeSpan2(t1, 0);
+            new TimeSpan(t1, t1);
             fail("Begin and end time of time span may not be the same!");
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
         //Test correct values
         try {
-            TimeSpan2 timeSpan2 = new TimeSpan2(t2, 20);
+            new TimeSpan(t2, t1);
         } catch (IllegalArgumentException ex) {
             fail("Constructor failed with correct values!");
         }
@@ -68,7 +68,7 @@ public class TimeSpanTest2 {
          */
         Time t1 = new Time(2015, 3, 17, 9, 10);
         Time t2 = new Time(2015, 3, 16, 12, 15);
-        TimeSpan2 ts = new TimeSpan2(t2, 1255);
+        TimeSpan ts = new TimeSpan(t2, t1);
         assertEquals("getBeginTime returns wrong begintime!", ts.getBeginTime(), t2);
     }
 
@@ -79,9 +79,9 @@ public class TimeSpanTest2 {
          * @return the end time of this time span
          */
         Time t1 = new Time(2015, 3, 17, 9, 10);
-        Time t2 = new Time(2015, 3, 17, 9, 15);
-        TimeSpan2 ts = new TimeSpan2(t1, 5);
-        assertEquals("getEndTime returns wrong endtime!", ts.getEndTime().compareTo(t2),0);
+        Time t2 = new Time(2015, 3, 16, 12, 15);
+        TimeSpan ts = new TimeSpan(t2, t1);
+        assertEquals("getEndTime returns wrong endtime!", ts.getEndTime(), t1);
     }
 
     @Test
@@ -94,14 +94,14 @@ public class TimeSpanTest2 {
         //Test normal values
         Time t1 = new Time(2015, 3, 17, 9, 10);
         Time t2 = new Time(2015, 3, 17, 9, 15);
-        TimeSpan2 ts = new TimeSpan2(t1, 5);
+        TimeSpan ts = new TimeSpan(t1, t2);
         assertEquals("Lengt returned is wrong!", ts.length(), 5);
         assertTrue("Lenght is not positive!", ts.length() > 0);
 
         //Test big values
         t1 = new Time(2015, 3, 17, 9, 10);
-        t2 = new Time(2115, 3, 17, 9, 10);
-        ts = new TimeSpan2(t1, 52560000);
+        t2 = new Time(2350, 1, 29, 15, 11);
+        ts = new TimeSpan(t1, t2);
         assertTrue("Length of huge timespan is not positive", ts.length() > 0);
     }
 
@@ -112,11 +112,11 @@ public class TimeSpanTest2 {
         //Setup values
         Time t1 = new Time(2015, 3, 17, 9, 10);
         Time t2 = new Time(2015, 3, 17, 9, 15);
-        TimeSpan2 ts = new TimeSpan2(t1, 4);
+        TimeSpan ts = new TimeSpan(t1, t2);
 
         //Test wrong values
         try {
-            ts.setBeginTime(new Time(2015, 3, 17, 9, 15));
+            ts.setBeginTime(new Time(2016, 4, 19, 21, 49));
             fail("Begin time must not be able to be set to a time after the end time!");
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
@@ -184,7 +184,7 @@ public class TimeSpanTest2 {
         //Setup values
         Time t1 = new Time(2015, 3, 17, 9, 10);
         Time t2 = new Time(2015, 3, 17, 9, 15);
-        TimeSpan2 ts = new TimeSpan2(t1, 5);
+        TimeSpan ts = new TimeSpan(t1, t2);
 
         //the end time of this time span will be moved up with [minutes] minutes
         //@param minutes (a negative value is allowed)
@@ -207,7 +207,7 @@ public class TimeSpanTest2 {
         //Setup values
         Time t1 = new Time(2015, 3, 17, 9, 10);
         Time t2 = new Time(2015, 3, 17, 9, 15);
-        TimeSpan2 ts = new TimeSpan2(t1, 5);
+        TimeSpan ts = new TimeSpan(t1, t2);
 
         //@param minutes  minutes + length of this period must be positive
         //Test normal value
@@ -234,7 +234,7 @@ public class TimeSpanTest2 {
         //Reset values
         t1 = new Time(2015, 3, 17, 9, 10);
         t2 = new Time(2015, 3, 17, 9, 15);
-        ts = new TimeSpan2(t1, 5);
+        ts = new TimeSpan(t1, t2);
         //the end time of this time span will be moved up with [minutes] minutes
         ts.changeLengthWith(5);
         assertEquals("End time has not been changed correctly!", 0, ts.getEndTime().compareTo(new Time(2015, 3, 17, 9, 15 + 5)));
@@ -247,17 +247,17 @@ public class TimeSpanTest2 {
         //Set values
         Time t1 = new Time(2015, 3, 17, 9, 10);
         Time t2 = new Time(2015, 3, 17, 9, 15);
-        TimeSpan2 ts = new TimeSpan2(t1, 5);
+        TimeSpan ts = new TimeSpan(t1, t2);
         //Test normal case
-        assertTrue("Timespan is within bounds!", ts.isPartOf(new TimeSpan2(new Time(2015, 3, 17, 9, 8),20)));
+        assertTrue("Timespan is within bounds!", ts.isPartOf(new TimeSpan(new Time(2015, 3, 17, 9, 8), new Time(2015, 3, 17, 9, 20))));
         //Test with same dates
         assertTrue("Timespans are the same!", ts.isPartOf(ts));
         //Test with end time out of timespan
-        assertFalse("End time is out of bounds!", ts.isPartOf(new TimeSpan2(new Time(2015, 3, 17, 9, 8), 6)));
+        assertFalse("End time is out of bounds!", ts.isPartOf(new TimeSpan(new Time(2015, 3, 17, 9, 8), new Time(2015, 3, 17, 9, 14))));
         //Test with begin time out of bounds
-        assertFalse("Begin time is out of bounds!", ts.isPartOf(new TimeSpan2(new Time(2015, 3, 17, 9, 11), 9)));
+        assertFalse("Begin time is out of bounds!", ts.isPartOf(new TimeSpan(new Time(2015, 3, 17, 9, 11), new Time(2015, 3, 17, 9, 20))));
         //Test with full timespan out of bounds
-        assertFalse("Timespan is fully out of bounds!", ts.isPartOf(new TimeSpan2(new Time(2015, 3, 18, 10, 12), 1388)));
+        assertFalse("Timespan is fully out of bounds!", ts.isPartOf(new TimeSpan(new Time(2015, 3, 18, 10, 12), new Time(2015, 3, 19, 9, 20))));
     }
 
     @Test
@@ -265,31 +265,31 @@ public class TimeSpanTest2 {
         //Set values
         Time t1 = new Time(2015, 3, 17, 9, 10);
         Time t2 = new Time(2015, 3, 17, 9, 15);
-        TimeSpan2 ts = new TimeSpan2(t1, 5);
+        TimeSpan ts = new TimeSpan(t1, t2);
 
         //@return if this time span and [timeSpan] are consecutive or possess a
         //common intersection, then the smallest time span ts will be returned, 
         //whereby this time span and [timeSpan] are part of ts, 
         //otherwise null will be returned 
         //Test with no union
-        assertNull("There is no union!", ts.unionWith(new TimeSpan2(new Time(2015, 4, 18, 13, 11), 3296)));
+        assertNull("There is no union!", ts.unionWith(new TimeSpan(new Time(2015, 4, 18, 13, 11), new Time(2015, 4, 20, 9, 20))));
         //Test with same timespan
 
-        ITimeSpan2 t = ts.unionWith(new TimeSpan2(new Time(2015, 3, 17, 9, 10), 5));
+        ITimeSpan t = ts.unionWith(new TimeSpan(new Time(2015, 3, 17, 9, 10), new Time(2015, 3, 17, 9, 15)));
         assertEquals("The same timespan should be returned!", t.getBeginTime().compareTo(ts.getBeginTime()), 0);
         assertEquals("The same timespan should be returned!", t.getEndTime().compareTo(ts.getEndTime()), 0);
         //Test with end different
 
-        t = ts.unionWith(new TimeSpan2(new Time(2015, 3, 17, 9, 10), 3));
+        t = ts.unionWith(new TimeSpan(new Time(2015, 3, 17, 9, 10), new Time(2015, 3, 17, 9, 13)));
         assertEquals("The same timespan should be returned!", t.getBeginTime().compareTo(ts.getBeginTime()), 0);
         assertEquals("The same timespan should be returned!", t.getEndTime().compareTo(new Time(2015, 3, 17, 9, 13)), 0);
 
-        t = ts.unionWith(new TimeSpan2(new Time(2015, 3, 17, 9, 12), 3));
+        t = ts.unionWith(new TimeSpan(new Time(2015, 3, 17, 9, 12), new Time(2015, 3, 17, 9, 15)));
         //Test with begin different
         assertEquals("The same timespan should be returned!", t.getBeginTime().compareTo(new Time(2015, 3, 17, 9, 12)), 0);
         assertEquals("The same timespan should be returned!", t.getEndTime().compareTo(ts.getEndTime()), 0);
 
-        t = ts.unionWith(new TimeSpan2(new Time(2015, 3, 17, 9, 12),6));
+        t = ts.unionWith(new TimeSpan(new Time(2015, 3, 17, 9, 12), new Time(2015, 3, 17, 9, 18)));
         //Test with both different
         assertEquals("The same timespan should be returned!", t.getBeginTime().compareTo(new Time(2015, 3, 17, 9, 12)), 0);
         assertEquals("The same timespan should be returned!", t.getEndTime().compareTo(new Time(2015, 3, 17, 9, 15)), 0);
@@ -301,29 +301,29 @@ public class TimeSpanTest2 {
         //Set values
         Time t1 = new Time(2015, 3, 17, 9, 10);
         Time t2 = new Time(2015, 3, 17, 9, 15);
-        TimeSpan2 ts = new TimeSpan2(t1, 5);
-        ITimeSpan2 t;
+        TimeSpan ts = new TimeSpan(t1, t2);
+        ITimeSpan t;
         //@return the largest time span which is part of this time span 
         //and [timeSpan] will be returned; if the intersection is empty null will 
         //be returned
         //Test with no intersection
-        assertNull("There is no intersection!", ts.intersectionWith(new TimeSpan2(new Time(2015, 4, 18, 13, 11), 3296)));
+        assertNull("There is no intersection!", ts.intersectionWith(new TimeSpan(new Time(2015, 4, 18, 13, 11), new Time(2015, 4, 20, 9, 20))));
         //Test with same timespan
-        t = ts.intersectionWith(new TimeSpan2(new Time(2015, 3, 17, 9, 10), 5));
+        t = ts.intersectionWith(new TimeSpan(new Time(2015, 3, 17, 9, 10), new Time(2015, 3, 17, 9, 15)));
         assertEquals("The same timespan should be returned!", t.getBeginTime().compareTo(ts.getBeginTime()), 0);
         assertEquals("The same timespan should be returned!", t.getEndTime().compareTo(ts.getEndTime()), 0);
         //Test with end different
 
-        t = ts.intersectionWith(new TimeSpan2(new Time(2015, 3, 17, 9, 10),3));
+        t = ts.intersectionWith(new TimeSpan(new Time(2015, 3, 17, 9, 10), new Time(2015, 3, 17, 9, 13)));
         assertEquals("The same timespan should be returned!", t.getBeginTime().compareTo(ts.getBeginTime()), 0);
         assertEquals("The same timespan should be returned!", t.getEndTime().compareTo(ts.getEndTime()), 0);
 
         //Test with begin different
-        t = ts.intersectionWith(new TimeSpan2(new Time(2015, 3, 17, 9, 12),3));
+        t = ts.intersectionWith(new TimeSpan(new Time(2015, 3, 17, 9, 12), new Time(2015, 3, 17, 9, 15)));
         assertEquals("The same timespan should be returned!", t.getBeginTime().compareTo(ts.getBeginTime()), 0);
         assertEquals("The same timespan should be returned!", t.getEndTime().compareTo(ts.getEndTime()), 0);
         //Test with both different
-        t = ts.intersectionWith(new TimeSpan2(new Time(2015, 3, 17, 9, 12),6));
+        t = ts.intersectionWith(new TimeSpan(new Time(2015, 3, 17, 9, 12), new Time(2015, 3, 17, 9, 18)));
         assertEquals("The same timespan should be returned!", t.getBeginTime().compareTo(ts.getBeginTime()), 0);
         assertEquals("The same timespan should be returned!", t.getEndTime().compareTo(new Time(2015, 3, 17, 9, 18)), 0);
     }

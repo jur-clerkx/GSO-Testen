@@ -16,23 +16,23 @@ public class TimeSpan2 implements ITimeSpan2 {
      * always positive
      * 
      */
-    private ITime bt, et;
+    private ITime bt;
     private int duration;
     
     /**
      * 
      * @param bt must be earlier than et
+     * @param et
      * @param minutes 
      */
-    public TimeSpan2(ITime bt,int minutes) {
-        if (minutes <= 0) {
+    public TimeSpan2(ITime bt,ITime et) {
+        if (bt.compareTo(et) <= 0) {
             throw new IllegalArgumentException("begin time "
                     + bt + " must be earlier than end time " + et);
         }
 
         this.bt = bt;
-        this.duration = minutes;
-        this.et = this.bt.plus(minutes);
+        this.duration = bt.difference(et);
     }
 
     @Override
@@ -42,19 +42,19 @@ public class TimeSpan2 implements ITimeSpan2 {
 
     @Override
     public ITime getEndTime() {
-        return et;
+        return bt.plus(duration);
     }
 
     @Override
     public int length() {
-        return et.difference(bt);
+        return duration;
     }
 
     @Override
     public void setBeginTime(ITime beginTime) {
-        if (beginTime.compareTo(et) <= 0) {
+        if (beginTime.compareTo(bt.plus(duration)) <= 0) {
             throw new IllegalArgumentException("begin time "
-                    + bt + " must be earlier than end time " + et);
+                    + bt + " must be earlier than end time " + "");
         }
 
         bt = beginTime;
@@ -62,19 +62,18 @@ public class TimeSpan2 implements ITimeSpan2 {
 
     @Override
     public void setEndTime(int minutes) {
-        if (this.et.plus(minutes).compareTo(this.bt) <= 0) {
+        if (this.bt.plus(minutes).compareTo(this.bt) <= 0) {
             throw new IllegalArgumentException("end time "
-                    + et + " must be later then begin time " + bt);
+                    + bt + " must be later then begin time " + duration);
         }
 
-        et = this.et.plus(minutes);
+        duration += minutes;
     }
 
     @Override
     public void move(int minutes) {
         bt = bt.plus(minutes);
         duration += minutes;
-        et = et.plus(minutes);
     }
 
     @Override
@@ -83,7 +82,7 @@ public class TimeSpan2 implements ITimeSpan2 {
             throw new IllegalArgumentException("length of period must be positive");
         }
         
-        et = et.plus(minutes);
+        duration += minutes;
     }
 
     @Override
@@ -94,7 +93,7 @@ public class TimeSpan2 implements ITimeSpan2 {
 
     @Override
     public ITimeSpan2 unionWith(ITimeSpan2 timeSpan) {
-        if (bt.compareTo(timeSpan.getEndTime()) < 0 || et.compareTo(timeSpan.getBeginTime()) > 0) {
+        if (bt.compareTo(timeSpan.getEndTime()) < 0 || bt.plus(duration).compareTo(timeSpan.getBeginTime()) > 0) {
             return null;
         }
         
@@ -105,20 +104,20 @@ public class TimeSpan2 implements ITimeSpan2 {
             begintime = timeSpan.getBeginTime();
         }
 
-        if (et.compareTo(timeSpan.getEndTime()) > 0) {
-            endtime = et;
+        if (bt.plus(duration).compareTo(timeSpan.getEndTime()) > 0) {
+            endtime = bt.plus(duration);
         } else {
             endtime = timeSpan.getEndTime();
         }
-        int duration = begintime.difference(endtime);
-        return new TimeSpan2(begintime, duration);
+        int Duration = begintime.difference(endtime);
+        return new TimeSpan2(begintime, bt.plus(Duration));
 
     }
 
     @Override
     public ITimeSpan2 intersectionWith(ITimeSpan2 timeSpan) {
 
-        if (bt.compareTo(timeSpan.getEndTime()) < 0 || et.compareTo(timeSpan.getBeginTime()) > 0) {
+        if (bt.compareTo(timeSpan.getEndTime()) < 0 || bt.plus(duration).compareTo(timeSpan.getBeginTime()) > 0) {
             return null;
         }
         ITime begintime, endtime;
@@ -128,8 +127,8 @@ public class TimeSpan2 implements ITimeSpan2 {
             begintime = timeSpan.getBeginTime();
         }
 
-        if (et.compareTo(timeSpan.getEndTime()) < 0) {
-            endtime = et;
+        if (bt.plus(duration).compareTo(timeSpan.getEndTime()) < 0) {
+            endtime = bt.plus(duration);
         } else {
             endtime = timeSpan.getEndTime();
         }
@@ -137,7 +136,7 @@ public class TimeSpan2 implements ITimeSpan2 {
         if (begintime.compareTo(endtime) < 0) {
             return null;
         }
-        int duration = begintime.difference(endtime);
-        return new TimeSpan2(begintime, duration);
+        int Duration = begintime.difference(endtime);
+        return new TimeSpan2(begintime, bt.plus(Duration));
     }
 }
