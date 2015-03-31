@@ -56,6 +56,7 @@ public class Contact {
         if (a != null) {
             if (myAgenda.contains(a)) {
                 myAgenda.remove(a);
+                a.removeContact(this);
             }
         }
     }
@@ -71,17 +72,28 @@ public class Contact {
         boolean check = false;
         if(a!= null)
         {
-            for(Appointment app : this.myAgenda)
+            if(!this.myAgenda.isEmpty())
             {
-                if(app.unionWith(a) != null)
+                for(Appointment app : this.myAgenda)
                 {
-                    if(!myAgenda.contains(a))
+                    if(app.unionWith(a) != null)
                     {
-                        myAgenda.add(a);
-                        a.addContact(this);
-                        check = true;
+                        if(!myAgenda.contains(a))
+                        {
+                            check = true;
+                        }
                     }
                 }
+            }
+            else
+            {
+            check = true;
+            }
+            
+            if(check == true)
+            {
+                 myAgenda.add(a);
+                 a.addContact(this);
             }
         }
         return check;

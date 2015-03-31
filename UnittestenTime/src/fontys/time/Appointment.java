@@ -73,15 +73,25 @@ public class Appointment implements ITimeSpan{
         boolean check = false;
         if(c != null && !this.invitees.contains(c))
         {
-            while(c.appointments().hasNext())
+            Iterator<Appointment> myIterator = c.appointments();
+            if(myIterator.hasNext())
             {
-                if(c.appointments().next().unionWith(timeSpan) != null)
+            while(myIterator.hasNext())
+            {
+                if(myIterator.next().unionWith(timeSpan) != null)
                 {
                   this.invitees.add(c);
                   c.addAppointment(this);
                 check = true;  
                 }
-            }            
+            }      
+            }
+            else
+            {
+                    this.invitees.add(c);
+                    c.addAppointment(this);
+                    check = true;  
+            }
         }
         return check;
     }
@@ -95,6 +105,7 @@ public class Appointment implements ITimeSpan{
         if(c!= null && this.invitees.contains(c))
         {
             invitees.remove(c);
+            c.removeAppointment(this);
         }
     }
     

@@ -227,8 +227,8 @@ public class TimeTest {
     {
         
         //Test to check the compare methode. Tested with a time after testTime, a time before testTime, and a time thats the same as testTime.
-        Assert.assertEquals(1, testTime1.compareTo(this.testTimeDifference));
-        Assert.assertEquals(-1, testTimeDifference.compareTo(testTime1));
-        Assert.assertEquals(0, testTime1.compareTo(testTime1));
+        Assert.assertTrue(testTime1.compareTo(testTimeDifference) <0);
+        Assert.assertTrue(testTimeDifference.compareTo(testTime1) >0);
+        Assert.assertTrue(testTime1.compareTo(testTime1) == 0);
     }
 }
