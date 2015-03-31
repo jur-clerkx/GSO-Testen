@@ -1,3 +1,4 @@
+import fontys.time.Contact;
 
 import fontys.time.Appointment;
 import fontys.time.Contact;
@@ -10,6 +11,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Test;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.

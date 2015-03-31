@@ -52,7 +52,7 @@ public class Contact {
      *
      * @param a as Appointment
      */
-    public void removeAppointment(Appointment a) {
+    void removeAppointment(Appointment a) {
         if (a != null) {
             if (myAgenda.contains(a)) {
                 myAgenda.remove(a);
@@ -62,19 +62,25 @@ public class Contact {
 
     /**
      * Adds an appointment to the Agenda. Appointment can't be null and can't
-     * exist in the current Agenda.
+     * exist in the current Agenda. And doesn't overlap with other appointments.
      *
      * @param a as Appointment
      * @return true if Appointment is added, returns false if not. 
      */
-    public boolean addAppointment(Appointment a) {
+    boolean addAppointment(Appointment a) {
         boolean check = false;
         if(a!= null)
         {
-            if(!myAgenda.contains(a))
+            for(Appointment app : this.myAgenda)
             {
-                myAgenda.add(a);
-                check = true;
+                if(app.unionWith(a) != null)
+                {
+                    if(!myAgenda.contains(a))
+                    {
+                        myAgenda.add(a);
+                        check = true;
+                    }
+                }
             }
         }
         return check;
