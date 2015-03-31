@@ -132,13 +132,13 @@ public class Appointment implements ITimeSpan{
     }
 
     @Override
-    public ITimeSpan unionWith(ITimeSpan timeSpan) {
-       return this.timeSpan.unionWith(timeSpan);
+    public ITimeSpan intersectionWith(ITimeSpan timeSpan) {
+       return this.timeSpan.intersectionWith(timeSpan);
     }
 
     @Override
-    public ITimeSpan intersectionWith(ITimeSpan timeSpan) {
-        return this.timeSpan.intersectionWith(timeSpan);
+    public ITimeSpan unionWith(ITimeSpan timeSpan) {
+        return this.timeSpan.unionWith(timeSpan);
     }
     
 }

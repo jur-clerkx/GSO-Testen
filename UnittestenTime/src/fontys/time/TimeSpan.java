@@ -90,7 +90,7 @@ public class TimeSpan implements ITimeSpan {
     }
 
     @Override
-    public ITimeSpan unionWith(ITimeSpan timeSpan) {
+    public ITimeSpan intersectionWith(ITimeSpan timeSpan) {
         if (bt.compareTo(timeSpan.getEndTime()) < 0 || et.compareTo(timeSpan.getBeginTime()) > 0) {
             return null;
         }
@@ -113,7 +113,7 @@ public class TimeSpan implements ITimeSpan {
     }
 
     @Override
-    public ITimeSpan intersectionWith(ITimeSpan timeSpan) {
+    public ITimeSpan unionWith(ITimeSpan timeSpan) {
 
         if (bt.compareTo(timeSpan.getEndTime()) < 0 || et.compareTo(timeSpan.getBeginTime()) > 0) {
             return null;

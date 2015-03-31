@@ -67,7 +67,7 @@ public class Contact {
      * @param a as Appointment
      * @return true if Appointment is added, returns false if not. 
      */
-    public boolean addAppointment(Appointment a) {
+    boolean addAppointment(Appointment a) {
         boolean check = false;
         if(a!= null)
         {

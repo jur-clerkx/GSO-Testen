@@ -74,7 +74,7 @@ public interface ITimeSpan {
      * whereby this time span and [timeSpan] are part of ts, 
      * otherwise null will be returned 
      */
-    ITimeSpan unionWith(ITimeSpan timeSpan);
+    ITimeSpan intersectionWith(ITimeSpan timeSpan);
 
     /**
      * 
@@ -83,5 +83,5 @@ public interface ITimeSpan {
      * and [timeSpan] will be returned; if the intersection is empty null will 
      * be returned
      */
-    ITimeSpan intersectionWith(ITimeSpan timeSpan);
+    ITimeSpan unionWith(ITimeSpan timeSpan);
 }

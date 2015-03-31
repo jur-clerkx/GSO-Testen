@@ -1,3 +1,5 @@
+package fontys.time;
+
 
 import fontys.time.Appointment;
 import fontys.time.Contact;
